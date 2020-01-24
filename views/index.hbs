@@ -1,2 +1,10 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+
+<form method="POST" action="upload" enctype="multipart/form-data">
+    <input name="files" multiple type="file" />
+    <input type="submit">
+</form>
+
+{{#each files}}
+    <p><a href="status/{{this}}">View {{this}} status</a></p>
+{{/each}}
