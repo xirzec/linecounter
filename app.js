@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const { ContainerClient } = require('@azure/storage-blob');
+const { EventHubProducerClient } = require('@azure/event-hubs');
 
 const indexRouter = require('./routes/index');
 const statusRouter = require('./routes/status');
@@ -23,6 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const containerClient = new ContainerClient(process.env['BlobConnectionString'], process.env['BlobContainer']);
 app.locals.containerClient = containerClient;
+
+const producerClient = new EventHubProducerClient(process.env['EventHubsConnectionString']);
+app.locals.producerClient = producerClient;
 
 app.use('/', indexRouter);
 app.use('/status', statusRouter);
